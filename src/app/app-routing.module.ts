@@ -5,6 +5,7 @@ import {HomeComponent} from './home/home.component';
 import { DriversComponent } from './drivers/drivers.component';
 import { DriverStandingsComponent } from './driver-standings/driver-standings.component';
 import { ConstructorStandingsComponent } from './constructor-standings/constructor-standings.component';
+import { CustomComponent } from './custom/custom.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'constructorStandings',
     component: ConstructorStandingsComponent
+  },
+  {
+    path: 'custom',
+    component: CustomComponent
   }
 ];
 

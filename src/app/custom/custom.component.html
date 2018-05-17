@@ -1,10 +1,41 @@
-<div class="example-container mat-elevation-z8">
-  <div class="example-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-  </div>
-
+<mat-card>
+  <mat-form-field>
+    <mat-select placeholder="Season">
+      <mat-option *ngFor="let season of seasons" [value]="season.season">
+        {{ season.season }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Drivers">
+      <mat-option *ngFor="let driver of drivers" [value]="driver.driverId">
+        {{driver.givenName}} {{ driver.familyName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Constructor">
+      <mat-option *ngFor="let constructor of constructors" [value]="constructor.constructorId">
+        {{ constructor.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Circuit">
+      <mat-option *ngFor="let circuit of circuits" [value]="circuit.circuitId">
+        {{ circuit.circuitName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Position">
+      <mat-option *ngFor="let position of positions" [value]="position">
+        {{ position }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-card>
+<mat-card>
   <table mat-table #table [dataSource]="dataSource">
 
     <!-- Position Column -->
@@ -40,4 +71,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-</div>
+</mat-card>

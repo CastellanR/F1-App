@@ -22,7 +22,10 @@ import {
    MatTableModule,
    MatFormFieldModule,
    MatInputModule,
+   MatOptionModule,
+   MatSelectModule,
 } from '@angular/material';
+import { CustomComponent } from './custom/custom.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import {
     HomeComponent,
     ConstructorStandingsComponent,
     NavbarComponent,
+    CustomComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +52,8 @@ import {
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
