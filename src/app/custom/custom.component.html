@@ -1,71 +1,67 @@
 <mat-card>
-  <mat-form-field>
-    <mat-select placeholder="Season">
-      <mat-option *ngFor="let season of seasons" [value]="season.season">
-        {{ season.season }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select placeholder="Drivers">
-      <mat-option *ngFor="let driver of drivers" [value]="driver.driverId">
-        {{driver.givenName}} {{ driver.familyName }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select placeholder="Constructor">
-      <mat-option *ngFor="let constructor of constructors" [value]="constructor.constructorId">
-        {{ constructor.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select placeholder="Circuit">
-      <mat-option *ngFor="let circuit of circuits" [value]="circuit.circuitId">
-        {{ circuit.circuitName }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select placeholder="Position">
-      <mat-option *ngFor="let position of positions" [value]="position">
-        {{ position }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+ <form (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-select placeholder="Season" [(value)]="season">
+        <mat-option *ngFor="let season of seasons" [value]="season.season">
+          {{ season.season }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Drivers" [(value)]="driver">
+        <mat-option *ngFor="let driver of drivers" [value]="driver.driverId">
+          {{driver.givenName}} {{ driver.familyName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Constructor" [(value)]="Constructor">
+        <mat-option *ngFor="let constructor of constructors" [value]="constructor.constructorId">
+          {{ constructor.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Position" [(value)]="position">
+        <mat-option *ngFor="let position of positions" [value]="position">
+          {{ position }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary">Make Query</button>
+ </form>
 </mat-card>
-<mat-card>
+<mat-card class="example-container">
   <table mat-table #table [dataSource]="dataSource">
 
-    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> Position </th>
+      <td mat-cell *matCellDef="let element"> {{element.Results['0'].position}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="driver">
       <th mat-header-cell *matHeaderCellDef> Driver </th>
-      <td mat-cell *matCellDef="let element"> {{element.givenName }} {{ element.familyName }}</td>
+      <td mat-cell *matCellDef="let element"> {{element.Results['0'].Driver.givenName }} {{ element.Results['0'].Driver.familyName }} </td>
     </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="number">
-      <th mat-header-cell *matHeaderCellDef> Number </th>
-      <td mat-cell *matCellDef="let element"> {{element.permanentNumber}} </td>
+    <ng-container matColumnDef="constructor">
+      <th mat-header-cell *matHeaderCellDef> Constructor </th>
+      <td mat-cell *matCellDef="let element"> {{element.Results['0'].Constructor.name}} </td>
     </ng-container>
 
-    <!-- Weight Column -->
-    <ng-container matColumnDef="nationality">
-      <th mat-header-cell *matHeaderCellDef> Nationality </th>
-      <td mat-cell *matCellDef="let element"> {{element.nationality}} </td>
+    <ng-container matColumnDef="circuit">
+      <th mat-header-cell *matHeaderCellDef> Circuit </th>
+      <td mat-cell *matCellDef="let element"> {{element.raceName}} </td>
     </ng-container>
 
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="birth">
-      <th mat-header-cell *matHeaderCellDef> Date of Birth </th>
-      <td mat-cell *matCellDef="let element"> {{element.dateOfBirth}} </td>
+    <ng-container matColumnDef="season">
+      <th mat-header-cell *matHeaderCellDef> Season </th>
+      <td mat-cell *matCellDef="let element"> {{element.season}} </td>
     </ng-container>
 
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="biography">
-      <th mat-header-cell *matHeaderCellDef> Biography </th>
-      <td mat-cell *matCellDef="let element"> <a href={{element.url}}> {{element.url}}</a> </td>
+    <ng-container matColumnDef="points">
+      <th mat-header-cell *matHeaderCellDef> Points </th>
+      <td mat-cell *matCellDef="let element"> {{element.Results['0'].points}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

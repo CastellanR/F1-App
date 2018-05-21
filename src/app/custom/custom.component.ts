@@ -13,13 +13,17 @@ export class CustomComponent implements OnInit {
   drivers: [String];
   positions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
   constructors: [String];
-  circuits: [String];
 
-  foods = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
+  season: String;
+  driver = String;
+  position: Number;
+  Constructor: String;
+
+  dataSource = new MatTableDataSource();
+  circuit: any;
+  MRData: any;
+  displayedColumns = [ 'position', 'driver', 'constructor', 'circuit', 'season', 'points'];
+
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
@@ -32,10 +36,24 @@ export class CustomComponent implements OnInit {
     this.http.get('http://ergast.com/api/f1/constructors.json?limit=900').subscribe( res =>
       this.constructors = res.MRData.ConstructorTable.Constructors
     );
-    this.http.get('http://ergast.com/api/f1/circuits.json?limit=900').subscribe( res =>
-      this.circuits = res.MRData.CircuitTable.Circuits
-    );
-
   }
 
+  onSubmit() {
+    console.log(this.driver);
+    console.log(this.season);
+    console.log(this.position);
+    console.log(this.Constructor);
+    this.http.get
+    (`http://ergast.com/api/f1/${this.season}/drivers/${this.driver}/constructors/${this.Constructor}/results/${this.position}.json`)
+    .subscribe(res =>
+      this.displayData(res)
+    );
+  }
+
+  displayData(data) {
+    this.circuit = data.MRData.RaceTable;
+    this.dataSource = new MatTableDataSource(data.MRData.RaceTable.Races);
+    console.log(data.MRData.RaceTable.Races);
+
+  }
 }
