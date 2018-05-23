@@ -1,34 +1,36 @@
 <mat-card>
+  <h3>Custom Query</h3>
  <form (ngSubmit)="onSubmit()">
     <mat-form-field>
-      <mat-select placeholder="Season" [(value)]="season">
+      <mat-select placeholder="Season (Required)" [(value)]="season">
         <mat-option *ngFor="let season of seasons" [value]="season.season">
           {{ season.season }}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <mat-select placeholder="Drivers" [(value)]="driver">
+      <mat-select placeholder="Drivers (Required)" [(value)]="driver">
         <mat-option *ngFor="let driver of drivers" [value]="driver.driverId">
           {{driver.givenName}} {{ driver.familyName }}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <mat-select placeholder="Constructor" [(value)]="Constructor">
+      <mat-select placeholder="Constructor (Required)" [(value)]="Constructor">
         <mat-option *ngFor="let constructor of constructors" [value]="constructor.constructorId">
           {{ constructor.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <mat-select placeholder="Position" [(value)]="position">
+      <mat-select placeholder="Position (Required) (If you choose 0, they are all positions available)" [(value)]="position">
         <mat-option *ngFor="let position of positions" [value]="position">
           {{ position }}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <button type="submit" mat-raised-button color="primary">Make Query</button>
+    <p>For example: Season: 2017 Driver: Lewis Hamilton Constructor: Mercedes Position: 0 </p>
  </form>
 </mat-card>
 <mat-card class="example-container">
