@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 
@@ -7,12 +7,15 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DriversComponent } from './drivers/drivers.component';
-import { DriverStandingsComponent } from './driver-standings/driver-standings.component';
-import { HomeComponent } from './home/home.component';
-import { ConstructorStandingsComponent } from './constructor-standings/constructor-standings.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { DriversComponent } from './components/drivers/drivers.component';
+import { DriverStandingsComponent } from './components/driver-standings/driver-standings.component';
+import { HomeComponent } from './components/home/home.component';
+import { ConstructorStandingsComponent } from './components/constructor-standings/constructor-standings.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { LayoutModule } from '@angular/cdk/layout';
+
+import { QueryService } from './services/query.service';
+
 import {
   MatToolbarModule,
    MatButtonModule,
@@ -26,7 +29,11 @@ import {
    MatOptionModule,
    MatSelectModule,
 } from '@angular/material';
-import { CustomComponent } from './custom/custom.component';
+import { CustomComponent } from './components/custom/custom.component';
+
+export function startupServiceFactory(query: QueryService): Function {
+  return () => query.load();
+}
 
 @NgModule({
   declarations: [
@@ -57,7 +64,14 @@ import { CustomComponent } from './custom/custom.component';
     MatSelectModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [ QueryService,
+    {
+        // Provider for APP_INITIALIZER
+        provide: APP_INITIALIZER,
+        useFactory: startupServiceFactory,
+        deps: [QueryService],
+        multi: true
+    } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

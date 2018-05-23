@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Injectable } from '@angular/core';
 import {  HttpClient } from '@angular/common/http';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
+import { QueryService } from '../../services/query.service';
 
 @Component({
   selector: 'app-custom',
@@ -21,28 +22,17 @@ export class CustomComponent implements OnInit {
 
   dataSource = new MatTableDataSource();
   circuit: any;
-  MRData: any;
   displayedColumns = [ 'position', 'driver', 'constructor', 'circuit', 'season', 'points'];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private query: QueryService) { }
 
   ngOnInit() {
-    this.http.get('http://ergast.com/api/f1/drivers.json?limit=900').subscribe( res =>
-      this.drivers = res.MRData.DriverTable.Drivers
-    );
-    this.http.get('http://ergast.com/api/f1/seasons.json?limit=90').subscribe( res =>
-      this.seasons = res.MRData.SeasonTable.Seasons
-    );
-    this.http.get('http://ergast.com/api/f1/constructors.json?limit=900').subscribe( res =>
-      this.constructors = res.MRData.ConstructorTable.Constructors
-    );
+      this.drivers = this.query.drivers.MRData.DriverTable.Drivers;
+      this.constructors = this.query.constructors.MRData.ConstructorTable.Constructors;
+      this.seasons = this.query.seasons.MRData.SeasonTable.Seasons;
   }
 
   onSubmit() {
-    console.log(this.driver);
-    console.log(this.season);
-    console.log(this.position);
-    console.log(this.Constructor);
     this.http.get
     (`http://ergast.com/api/f1/${this.season}/drivers/${this.driver}/constructors/${this.Constructor}/results/${this.position}.json`)
     .subscribe(res =>
@@ -53,7 +43,6 @@ export class CustomComponent implements OnInit {
   displayData(data) {
     this.circuit = data.MRData.RaceTable;
     this.dataSource = new MatTableDataSource(data.MRData.RaceTable.Races);
-    console.log(data.MRData.RaceTable.Races);
 
   }
 }
